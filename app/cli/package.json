@@ -1,0 +1,11 @@
+{
+  "name": "mjolnirui",
+  "version": "1.0.0",
+  "bin": {
+    "mjolnirui": "./bin/mjolnirui.js"
+  },
+  "files": ["dist", "bin"],
+  "publishConfig": {
+    "access": "public"
+  }
+}

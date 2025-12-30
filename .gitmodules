@@ -1,0 +1,3 @@
+[submodule "mjolnirui-registry"]
+	path = mjolnirui-registry
+	url = https://github.com/MjolnirDesignStudios/mjolnirui-registry.git

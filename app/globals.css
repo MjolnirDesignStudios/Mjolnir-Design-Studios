@@ -1,0 +1,166 @@
+/* app/globals.css — MJÖLNIR DESIGN STUDIOS 2026 — THUNDER REBORN */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────── 1. CSS VARIABLES — Light & Dark Mode (perfect sync with config) ─────── */
+@layer base {
+  :root {
+    /* Light mode — rare but glorious */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    /* THE STORM — Default Mjölnir state */
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --radius: 0.75rem;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+
+  *, *::before, *::after {
+    @apply border-border box-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.03) 0%, transparent 20%),
+      radial-gradient(circle at 90% 80%, rgba(255, 204, 17, 0.03) 0%, transparent 20%);
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+}
+
+/* ─────── 2. MJÖLNIR COMPONENTS ─────── */
+@layer components {
+  .heading-1 { @apply font-heading text-5xl md:text-6xl lg:text-7xl font-black tracking-tight; }
+  .heading-2 { @apply font-heading text-4xl md:text-5xl font-bold tracking-tight; }
+  .heading-3 { @apply font-heading text-3xl md:text-4xl font-semibold; }
+  .text-gradient { @apply bg-gradient-to-r from-electric via-primary to-gold bg-clip-text text-transparent; }
+  .glass { @apply backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl; }
+  .storm-gradient { @apply bg-gradient-to-br from-storm-950 via-storm-900 to-black; }
+  .electric-glow { box-shadow: 0 0 60px rgba(0, 240, 255, 0.4); }
+  .gold-glow { box-shadow: 0 0 60px rgba(255, 204, 17, 0.4); }
+}
+
+/* ─────── 3. UTILITIES & ANIMATIONS ─────── */
+@layer utilities {
+  .bg-clip-text { -webkit-background-clip: text; background-clip: text; }
+}
+
+/* ─────── 4. ELECTRIC BORDER — 2026 FINAL VERSION ─────── */
+.electric-border {
+  --electric-border-color: #7DF9FF;
+  --eb-border-width: 3px;
+  position: relative;
+  border-radius: inherit;
+  overflow: visible;
+  isolation: isolate;
+}
+.electric-border .eb-content { position: relative; z-index: 1; border-radius: inherit; }
+.electric-border .eb-layers { position: absolute; inset: -12px; border-radius: inherit; pointer-events: none; z-index: 10; }
+.electric-border .eb-layers > * { position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity 0.6s ease; }
+@layer components { .electric-border:hover .eb-layers > * { opacity: 1 !important; } }
+.electric-border .eb-stroke { border: var(--eb-border-width) solid var(--electric-border-color); }
+.electric-border .eb-glow-1 { border: var(--eb-border-width) solid color-mix(in oklab, var(--electric-border-color) 60%, transparent); filter: blur(8px); }
+.electric-border .eb-glow-2 { border: var(--eb-border-width) solid var(--electric-border-color); filter: blur(20px); }
+.electric-border .eb-background-glow { background: radial-gradient(circle at 30% 30%, var(--electric-border-color), transparent 70%); filter: blur(50px); opacity: 0.7; }
+
+
+/* ─────── 5. LIGHTNING CONTAINER ─────── */
+.lightning-container { width: 100%; height: 100%; position: relative; }
+
+
+
+
+/* ─────── 6. BIFROST COLORS ─────── */
+@keyframes rainbow-1 { 0%,100% { transform: translate(0%, 0%) rotate(0deg) scale(1); }     50% { transform: translate(30%, -30%) rotate(180deg) scale(1.3); } }
+@keyframes rainbow-2 { 0%,100% { transform: translate(0%, 0%) rotate(51deg); }         50% { transform: translate(-40%, 20%) rotate(231deg) scale(1.4); } }
+@keyframes rainbow-3 { 0%,100% { transform: translate(0%, 0%) rotate(102deg); }        50% { transform: translate(20%, 40%) rotate(282deg) scale(1.2); } }
+@keyframes rainbow-4 { 0%,100% { transform: translate(0%, 0%) rotate(153deg); }        50% { transform: translate(-30%, -20%) rotate(333deg) scale(1.5); } }
+@keyframes rainbow-5 { 0%,100% { transform: translate(0%, 0%) rotate(204deg); }        50% { transform: translate(40%, 30%) rotate(384deg) scale(1.1); } }
+@keyframes rainbow-6 { 0%,100% { transform: translate(0%, 0%) rotate(255deg); }        50% { transform: translate(-20%, -40%) rotate(435deg) scale(1.4); } }
+@keyframes rainbow-7 { 0%,100% { transform: translate(0%, 0%) rotate(306deg); }        50% { transform: translate(30%, 20%) rotate(486deg) scale(1.3); } }
+
+
+/* ─────── 7. BIFROST ANIMATIONS ─────── */
+.animate-rainbow-1 { animation: rainbow-1 20s ease-in-out infinite; }
+.animate-rainbow-2 { animation: rainbow-2 22s ease-in-out infinite; }
+.animate-rainbow-3 { animation: rainbow-3 24s ease-in-out infinite; }
+.animate-rainbow-4 { animation: rainbow-4 26s ease-in-out infinite; }
+.animate-rainbow-5 { animation: rainbow-5 28s ease-in-out infinite; }
+.animate-rainbow-6 { animation: rainbow-6 30s ease-in-out infinite; }
+.animate-rainbow-7 { animation: rainbow-7 32s ease-in-out infinite; }
+
+.bg-radial-glow {
+  background: radial-gradient(circle at center, currentColor 0%, transparent 70%);
+}
+
+
+
+/* ─────── 7. SHIMMER ANIMATIONS ─────── */
+@keyframes animate-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: animate-shimmer 10s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

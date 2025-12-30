@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-schema.json",
+  "name": "mjolnirui",
+  "homepage": "https://mjolnirui.com",
+  "items": [
+    {
+      "name": "thunder-button",
+      "type": "components:ui",
+      "files": [
+        {
+          "name": "thunder-button.tsx",
+          "content": "/* Paste full component code here as string */"
+        }
+      ],
+      "dependencies": ["gsap", "class-variance-authority"],
+      "registryDependencies": []
+    },
+    {
+      "name": "lightning-card",
+      "type": "components:ui",
+      "files": [/* ... */]
+    }
+    // Add all your components here
+  ]
+}
