@@ -2,7 +2,7 @@
 export const navItems = [
   { name: "About", link: "/#about" },
   { name: "Blocks", link: "/#blocks" },
-  { name: "Forge", link: "/forge" },
+  { name: "Forge", link: "/#forge-demo" },
   { name: "Pricing", link: "/#pricing" },
   { name: "Tech", link: "/#tech" },
 ];
@@ -120,11 +120,13 @@ export const gridItems: GridItem[] = [
 // REST OF YOUR DATA (unchanged)
 // ────────────────────────────────────────────────────────────────
 export const companies = [
-  { id: 1, name: "", img: "", nameImg: "" },
-  { id: 2, name: "", img: "", nameImg: "" },
-  { id: 3, name: "", img: "/host.svg", nameImg: "/hostName.svg" },
-  { id: 4, name: "", img: "", nameImg: "" },
-  { id: 5, name: "", img: "/dock.svg", nameImg: "/dockerName.svg" },
+  { id: 1, name: "docker", img: "/docker.svg", nameImg: "/docker.svg" },
+  { id: 2, name: "figma", img: "/figma.svg", nameImg: "/figma.svg" },
+  { id: 2, name: "gsap", img: "/gsap.svg", nameImg: "/gsap.svg" },
+  { id: 3, name: "hostinger", img: "/host.svg", nameImg: "/hostName.svg" },
+  { id: 3, name: "hubspot", img: "/hubspot.svg", nameImg: "/hubspot.svg" },
+  { id: 4, name: "meshy", img: "/meshy.svg", nameImg: "/meshy.svg" },
+  { id: 5, name: "supabase", img: "/supabase.svg", nameImg: "/supabase.svg" },
 ];
 
 export const socialMedia = [
@@ -144,47 +146,47 @@ export const skills = [
 export const teamMembers = [
   {
     id: 1,
-    name: "Christopher 'Master' Chiodo",
+    name: "Lord Silverhammer",
     role: "Founder & President",
     description: "The visionary leader of Mjolnir Design Studios...",
     avatar: "/Images/avatar-hero.jpg",
-    experience: "15+ years in UI/UX and Web Dev",
-    skills: ["bitcoin", "gsap", "three", "re", "ts"]
+    experience: "15+ years in engineering, finance, and web development",
+    skills: ["bitcoin", "gsap", "python", "react", "three", "ts"]
   },
   {
     id: 2,
-    name: "Thor Odinson",
+    name: "OdinAI",
     role: "Senior Web Developer",
-    description: "Thor brings years of experience in business and finance roles over many decades. Thor specializes in business operations, financial system management, and technology solutions which will allow Mjolnir to withstand the test of time.",
-    avatar: "/Images/thor-avatar.jpg", // Placeholder
+    description: "Odin brings years of experience in business and finance roles over many decades. Odin specializes in business operations, financial system management, and technology solutions which allow Mjolnir to forge the future.",
+    avatar: "/Images/odin-avatar.jpg", // Placeholder
     experience: "10 years in Web Development",
     skills: ["html", "css", "fm", "re", "ts"]
   },
   {
     id: 3,
-    name: "Loki Laufeyson",
+    name: "Bilder",
     role: "Vice President & Creative Director",
-    description: "Loki, clever and innovative in his craft. Digital magic is his specialty and he brings mischief and mastery to every initiative.",
+    description: "Bilder, clever and innovative in his craft. Digital AI magic is his specialty and he brings mischief and mastery to every initiative.",
     avatar: "/Images/loki-avatar.jpg", // Placeholder; add to public/images
     experience: "8 years in Creative Direction",
-    skills: ["docker","figma", "next", "tail"]
+    skills: ["docker", "figma", "next", "tail"]
   },
   {
     id: 4,
-    name: "Balder the Brave",
+    name: "Gilver",
     role: "Senior UI/UX Designer",
-    description: "Sif crafts intuitive interfaces with a focus on user experience, blending artistry and functionality in every pixel.",
+    description: "Gilder's intuitive AI brain interfaces between animation blending artistry and functionality in every pixel.",
     avatar: "/Images/sif-avatar.jpg", // Placeholder
     experience: "7 years in UI/UX",
     skills: ["blender","javascript","python", "replit"]
   },
   {
     id: 5,
-    name: "Beta Ray Bill",
-    role: "Senior Video & Animation Specialist",
-    description: "Bill produces stunning videos and animations, with an eye for detail that captures every nuance.",
-    avatar: "/Images/bill-avatar.jpg", // Placeholder
-    experience: "9 years in Video Production",
-    skills: ["gsap","fm","supabase","three",]
+    name: "Silver",
+    role: "Graphics Specialist",
+    description: "Silver produces stunning animations, images, graphics, and video content for your business. Silver is the new Gold, powering your creative imagination with SilverAI.",
+    avatar: "/Images/silver-avatar.jpg", // Placeholder
+    experience: "Trained on 5 years of video content creation data",
+    skills: ["gsap","figma","unity","three",]
   }
 ];

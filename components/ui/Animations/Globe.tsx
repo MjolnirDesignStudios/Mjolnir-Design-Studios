@@ -1,3 +1,4 @@
+// components/ui/Animations/Globe.tsx — Fixed & Optimized for BentoGrid
 "use client";
 
 import React, { useRef, useEffect } from "react";
@@ -26,7 +27,6 @@ export default function Globe({
   markerColors = ["#f59e0b"],
   glowColor = "#f8fafc",
   rings = true,
-  ringIntensity = "epic",
   opacity = 0.88,
   brightness = 1.8,
   scale = 1,
@@ -35,34 +35,22 @@ export default function Globe({
 }: GlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const globeRef = useRef<any>(null);
-  
+
   const pointerInteracting = useRef<number | null>(null);
   const pointerLastX = useRef<number | null>(null);
-
-  // Stable deps — no more React warnings
-  const deps = [
-    dark,
-    baseColor,
-    markerColors.join(","),
-    glowColor,
-    opacity,
-    brightness,
-    scale,
-    offsetX,
-    offsetY,
-  ];
 
   useEffect(() => {
     if (!canvasRef.current) return;
 
-    let width = canvasRef.current.offsetWidth;
+    const canvas = canvasRef.current;
+    let width = canvas.offsetWidth;
     let phi = 0;
 
     const onResize = () => {
-      if (!canvasRef.current) return;
-      width = canvasRef.current.offsetWidth;
-      if (globeRef.current) {
-        globeRef.current.onResize?.(width);
+      if (!canvas) return;
+      width = canvas.offsetWidth;
+      if (globeRef.current?.onResize) {
+        globeRef.current.onResize(width);
       }
     };
 
@@ -70,7 +58,7 @@ export default function Globe({
     onResize();
 
     try {
-      globeRef.current = createGlobe(canvasRef.current, {
+      globeRef.current = createGlobe(canvas, {
         devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
         width: width * 2,
         height: width * 2,
@@ -113,14 +101,11 @@ export default function Globe({
       window.removeEventListener("resize", onResize);
       if (globeRef.current?.destroy) globeRef.current.destroy();
     };
-  }, deps); // Stable array — no more warnings
-
-  const primaryRing = markerColors[0] || "#f59e0b";
-  const goldRing = "#FFD700";
+  }, [dark, baseColor, markerColors, glowColor, opacity, brightness, scale, offsetX, offsetY]);
 
   return (
-    <div className={clsx("relative aspect-square overflow-visible", className)}>
-      {/* GOLD RINGS + GREEN ARCS */}
+    <div className={clsx("relative w-full h-full aspect-square", className)}>
+      {/* Rings & Glow Effects */}
       {rings && (
         <div className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 rounded-full border-8 border-yellow-500/20 animate-pulse" />
@@ -137,9 +122,10 @@ export default function Globe({
         </div>
       )}
 
+      {/* Canvas — Now guaranteed to fill container */}
       <canvas
         ref={canvasRef}
-        className="h-full w-full"
+        className="absolute inset-0 w-full h-full"
         style={{ cursor: pointerInteracting.current !== null ? "grabbing" : "grab" }}
         onPointerDown={(e) => {
           pointerInteracting.current = e.clientX;

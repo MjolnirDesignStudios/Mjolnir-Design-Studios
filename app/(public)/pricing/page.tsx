@@ -14,7 +14,7 @@ export default function PricingPage() {
       <FloatingNav />
 
       {/* Main Content - Pricing Section */}
-      <main className="flex-1 pt-24 lg:pt-32"> {/* Padding to avoid overlap with fixed navbar */}
+      <main className="flex-1 pt-12 lg:pt-8"> {/* Padding to avoid overlap with fixed navbar */}
         <Pricing />
       </main>
 

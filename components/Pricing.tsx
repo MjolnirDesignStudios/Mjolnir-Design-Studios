@@ -17,7 +17,7 @@ const tiers = [
     original: 149,
     description: "Are You Worthy?",
     features: [
-      "All MjolnirUI Components",
+      "Base MjolnirUI Components",
       "Basic Animations & Effects",
       "Email Support",
       "Community Access",
@@ -39,7 +39,7 @@ const tiers = [
     features: [
       "Everything in Base",
       "Advanced GSAP Animations",
-      "Priority Support",
+      "3D Model and Printing Forge",
       "Custom Component Requests",
       "Commercial License",
     ],
@@ -76,10 +76,10 @@ const tiers = [
     description: "Powered by Bitcoin.",
     features: [
       "Any Feature You Want",
-      "Direct Access to Thor",
+      "Direct Access to Odin AI",
       "Custom Built Components",
-      "Lightning Delivery",
-      "Paid in Bitcoin Only",
+      "Lightning Fast Delivery",
+      "Payments in Bitcoin Only",
     ],
     buttonText: "Pay with BTC",
     electricColor: "#FF9900",

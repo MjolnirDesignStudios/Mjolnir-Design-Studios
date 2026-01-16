@@ -6,8 +6,8 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Blocks from "@/components/Blocks";
 import Pricing from "@/components/Pricing";
-import Tech from "@/components/Tech";
 import Footer from "@/components/Footer";
+import Forge from "@/components/Forge";
 
 
 export default function Home() {
@@ -40,14 +40,14 @@ export default function Home() {
 
       {/* Forge — Always Visible — Now Responsive */}
       <div className="w-full">
+        <Forge />
       </div>
 
       {/* Pricing — Always Visible — Now Responsive */}
       <div className="w-full">
         <Pricing />
       </div>
-
-      
+    
 
       {/* Footer — Always Visible */}
       <div className="w-full">

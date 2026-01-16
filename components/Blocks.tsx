@@ -1,9 +1,9 @@
-// app/components/Blocks.tsx — ORIGINAL STYLING PRESERVED + ONLY SHIMMER BUTTON ADDED
+// app/components/Blocks.tsx — EnergyTunnel Background on Rocket Block
 import React from "react";
 import { Globe, Rocket, Zap, Hammer, Shield } from "lucide-react";
-import { StarField } from "@/components/ui/Animations/StarField";
 import ShimmerButton from "@/components/ui/Buttons/ShimmerButton";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Blocks() {
   return (
@@ -19,20 +19,26 @@ export default function Blocks() {
           </p>
         </div>
 
-        {/* ACETERNITY BENTO GRID — YOUR CONTENT, THEIR STYLE */}
+        {/* ACETERNITY BENTO GRID */}
         <ul className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-4 lg:gap-4">
           
-          {/* 1. Rocket — tall center with perfected StarField background */}
+          {/* 1. Rocket — Large center with EnergyTunnel background */}
           <li className="md:[grid-area:1/4/3/10] lg:[grid-area:1/4/2.2/10]">
             <div className="relative h-full rounded-3xl border border-white/10 overflow-hidden isolate">
-              {/* StarField Background */}
-              <StarField
-                className="absolute inset-0 w-full h-full"
-                speed={0.005}
+              {/* EnergyTunnel Background */}
+              <Image
+                src="/Images/Backgrounds/EnergyTunnel.jpeg"
+                alt="Energy Tunnel"
+                fill
+                priority
+                className="object-cover object-center scale-110"
               />
 
-              {/* Stronger frosted overlay for perfect text contrast */}
-              <div className="absolute inset-0 bg-black/65" />
+              {/* Dark overlay for text contrast */}
+              <div className="absolute inset-0 bg-black/60" />
+
+              {/* Subtle radial glow */}
+              <div className="absolute inset-0 bg-gradient-radial from-cyan-500/20 via-transparent to-transparent blur-3xl" />
 
               <div className="relative h-full p-8 md:p-12 flex flex-col items-center justify-center text-center gap-8 z-10">
                 <div className="p-10 rounded-3xl bg-gradient-to-br from-purple-800 to-blue-400 shadow-2xl">
@@ -46,7 +52,6 @@ export default function Blocks() {
                     From Idea to Launch!
                   </p>
 
-                  {/* ONLY CHANGE: ShimmerButton CTA */}
                   <Link href="/blocks" className="mt-10 inline-block">
                     <ShimmerButton
                       title="View Blocks"
@@ -60,7 +65,7 @@ export default function Blocks() {
             </div>
           </li>
 
-          {/* The rest of your boxes — 100% untouched */}
+          {/* Rest of boxes — unchanged */}
           <li className="md:[grid-area:1/1/2/4] lg:[grid-area:1/1/1.5/4]">
             <div className="relative h-full rounded-3xl border border-white/10 bg-black/40 backdrop-blur-xl p-8 flex flex-col items-center justify-center text-center gap-6">
               <div className="p-8 rounded-3xl bg-gradient-to-br from-blue-500 to-green-400 shadow-2xl">

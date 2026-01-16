@@ -1,7 +1,7 @@
-// components/ui/Animations/LightningEffect.tsx — THE TRUE LIGHTNING, FIXED & ETERNAL
+// components/ui/Animations/LightningEffect.tsx — Optimized & Error-Free
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface LightningEffectProps {
   hue?: number;
@@ -21,21 +21,43 @@ const LightningEffect: React.FC<LightningEffectProps> = ({
   className,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationId = useRef<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const lastTime = useRef(performance.now());
+  const startTime = useRef(performance.now());
 
+  // Intersection Observer — only run when visible
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let animationId: number;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: "100px" }
+    );
+
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) {
+      if (animationId.current) cancelAnimationFrame(animationId.current);
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
     let gl: WebGLRenderingContext | null = null;
+    const dpr = Math.min(window.devicePixelRatio, 2);
 
     const resizeCanvas = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio, 2);
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
-      canvas.style.width = rect.width + "px";
-      canvas.style.height = rect.height + "px";
+      canvas.style.width = `${rect.width}px`;
+      canvas.style.height = `${rect.height}px`;
     };
 
     const initWebGL = () => {
@@ -44,9 +66,7 @@ const LightningEffect: React.FC<LightningEffectProps> = ({
 
       const vsSource = `
         attribute vec2 aPosition;
-        void main() {
-          gl_Position = vec4(aPosition, 0.0, 1.0);
-        }
+        void main() { gl_Position = vec4(aPosition, 0.0, 1.0); }
       `;
 
       const fsSource = `
@@ -59,7 +79,7 @@ const LightningEffect: React.FC<LightningEffectProps> = ({
         uniform float uIntensity;
         uniform float uSize;
 
-        #define OCTAVE_COUNT 10
+        #define OCTAVE_COUNT 8
 
         vec3 hsv2rgb(vec3 c) {
           vec3 rgb = clamp(abs(mod(c.x*6.0+vec3(0.0,4.0,2.0),6.0)-3.0)-1.0,0.0,1.0);
@@ -100,10 +120,10 @@ const LightningEffect: React.FC<LightningEffectProps> = ({
           float value = 0.0;
           float amplitude = 0.5;
           for (int i = 0; i < OCTAVE_COUNT; ++i) {
-              value += amplitude * noise(p);
-              p *= rotate2d(0.45);
-              p *= 2.0;
-              amplitude *= 0.5;
+            value += amplitude * noise(p);
+            p *= rotate2d(0.45);
+            p *= 2.0;
+            amplitude *= 0.5;
           }
           return value;
         }
@@ -128,12 +148,13 @@ const LightningEffect: React.FC<LightningEffectProps> = ({
         }
       `;
 
-      const compileShader = (type: number, source: string) => {
-        const shader = gl!.createShader(type)!;
+      const compileShader = (type: number, source: string): WebGLShader | null => {
+        const shader = gl!.createShader(type);
+        if (!shader) return null;
         gl!.shaderSource(shader, source);
         gl!.compileShader(shader);
         if (!gl!.getShaderParameter(shader, gl!.COMPILE_STATUS)) {
-          console.warn("Shader error:", gl!.getShaderInfoLog(shader));
+          console.warn("Shader compile error:", gl!.getShaderInfoLog(shader));
           gl!.deleteShader(shader);
           return null;
         }
@@ -144,94 +165,132 @@ const LightningEffect: React.FC<LightningEffectProps> = ({
       const fs = compileShader(gl.FRAGMENT_SHADER, fsSource);
       if (!vs || !fs) return false;
 
-      const program = gl.createProgram()!;
-      gl.attachShader(program, vs);
-      gl.attachShader(program, fs);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.warn("Program link error");
+      const program = gl!.createProgram();
+      if (!program) return false;
+
+      gl!.attachShader(program, vs);
+      gl!.attachShader(program, fs);
+      gl!.linkProgram(program);
+
+      if (!gl!.getProgramParameter(program, gl!.LINK_STATUS)) {
+        console.warn("Program link error:", gl!.getProgramInfoLog(program));
         return false;
       }
 
-      gl.useProgram(program);
+      gl!.useProgram(program);
 
       // Fullscreen quad
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+      const buffer = gl!.createBuffer();
+      gl!.bindBuffer(gl!.ARRAY_BUFFER, buffer);
+      gl!.bufferData(gl!.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl!.STATIC_DRAW);
 
-      const pos = gl.getAttribLocation(program, "aPosition");
-      gl.enableVertexAttribArray(pos);
-      gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+      const pos = gl!.getAttribLocation(program, "aPosition");
+      gl!.enableVertexAttribArray(pos);
+      gl!.vertexAttribPointer(pos, 2, gl!.FLOAT, false, 0, 0);
+
+      // Safe uniform lookup with null checks
+      const getUniform = (name: string) => gl!.getUniformLocation(program, name);
 
       const uniforms = {
-        iResolution: gl.getUniformLocation(program, "iResolution")!,
-        iTime: gl.getUniformLocation(program, "iTime")!,
-        uHue: gl.getUniformLocation(program, "uHue")!,
-        uXOffset: gl.getUniformLocation(program, "uXOffset")!,
-        uSpeed: gl.getUniformLocation(program, "uSpeed")!,
-        uIntensity: gl.getUniformLocation(program, "uIntensity")!,
-        uSize: gl.getUniformLocation(program, "uSize")!,
+        iResolution: getUniform("iResolution"),
+        iTime: getUniform("iTime"),
+        uHue: getUniform("uHue"),
+        uXOffset: getUniform("uXOffset"),
+        uSpeed: getUniform("uSpeed"),
+        uIntensity: getUniform("uIntensity"),
+        uSize: getUniform("uSize"),
       };
 
-      let start = performance.now();
+      // Only proceed if all critical uniforms exist
+      if (!uniforms.iResolution || !uniforms.iTime) {
+        console.warn("Missing critical uniforms");
+        return false;
+      }
 
-      const render = () => {
-        resizeCanvas();
+      // Store uniforms in closure
+      (window as any)._lightningUniforms = uniforms;
 
-        const time = (performance.now() - start) / 1000;
-
-        if (!gl) return;
-
-        gl.viewport(0, 0, canvas.width, canvas.height);
-        gl.clearColor(0, 0, 0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT);
-
-        gl.uniform2f(uniforms.iResolution, canvas.width, canvas.height);
-        gl.uniform1f(uniforms.iTime, time);
-        gl.uniform1f(uniforms.uHue, hue);
-        gl.uniform1f(uniforms.uXOffset, xOffset);
-        gl.uniform1f(uniforms.uSpeed, speed);
-        gl.uniform1f(uniforms.uIntensity, intensity);
-        gl.uniform1f(uniforms.uSize, size);
-
-        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-        animationId = requestAnimationFrame(render);
-      };
-
-      render();
       return true;
     };
 
-    // Try WebGL — if fails, fall back to CSS (no error)
+    const render = () => {
+      if (!gl || !canvasRef.current) return;
+
+      resizeCanvas();
+
+      const currentTime = performance.now();
+      if (currentTime - lastTime.current < 33) { // ~30 FPS
+        animationId.current = requestAnimationFrame(render);
+        return;
+      }
+      lastTime.current = currentTime;
+
+      const time = (currentTime - startTime.current) / 1000;
+
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+
+      const u = (window as any)._lightningUniforms;
+      if (u) {
+        gl.uniform2f(u.iResolution, canvas.width, canvas.height);
+        gl.uniform1f(u.iTime, time);
+        gl.uniform1f(u.uHue, hue);
+        gl.uniform1f(u.uXOffset, xOffset);
+        gl.uniform1f(u.uSpeed, speed);
+        gl.uniform1f(u.uIntensity, intensity);
+        gl.uniform1f(u.uSize, size);
+      }
+
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+      animationId.current = requestAnimationFrame(render);
+    };
+
     if (!initWebGL()) {
+      // CSS fallback
       canvas.style.background = "radial-gradient(circle at 50% 0%, #00f0ff11 0%, transparent 70%)";
-      canvas.style.animation = "lightning-pulse 10s infinite ease-in-out";
-      document.head.insertAdjacentHTML("beforeend", `
-        <style>
+      canvas.style.animation = "lightning-pulse 8s infinite ease-in-out";
+      if (!document.getElementById("lightning-pulse-style")) {
+        const style = document.createElement("style");
+        style.id = "lightning-pulse-style";
+        style.textContent = `
           @keyframes lightning-pulse {
             0%, 100% { opacity: 0.15; }
             5%, 18% { opacity: 0.4; }
             10% { opacity: 0.25; }
           }
-        </style>
-      `);
+        `;
+        document.head.appendChild(style);
+      }
+    } else {
+      render();
     }
 
     const handleResize = () => resizeCanvas();
     window.addEventListener("resize", handleResize);
     resizeCanvas();
 
-    return () => {
-      if (animationId) cancelAnimationFrame(animationId);
-      window.removeEventListener("resize", handleResize);
+    const handleVisibility = () => {
+      if (document.hidden) {
+        if (animationId.current) cancelAnimationFrame(animationId.current);
+      } else if (isVisible) {
+        render();
+      }
     };
-  }, [hue, xOffset, speed, intensity, size]);
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      if (animationId.current) cancelAnimationFrame(animationId.current);
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [isVisible, hue, xOffset, speed, intensity, size]);
 
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 w-full h-full pointer-events-none${className ? ` ${className}` : ""}`}
+      className={`absolute inset-0 w-full h-full pointer-events-none ${className || ""}`}
     />
   );
 };

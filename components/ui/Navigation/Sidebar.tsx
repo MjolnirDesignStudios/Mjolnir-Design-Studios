@@ -13,14 +13,16 @@ import {
   Hammer, 
   Palette,
   Download,
-  Settings,
   Globe,
   Layout,
   FileCode,
   Terminal,
-  Star
+  Star,
+  Bitcoin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+import SponsorshipBanner from "../Banners/SponsorshipBanner";
 
 interface NavItem {
   label: string;
@@ -38,15 +40,15 @@ interface Category {
 
 const categories: Category[] = [
   {
-    title: "Get Started",
+    title: "Build",
     openByDefault: true,
     items: [
-      { label: "Introduction", href: "/blocks", icon: <Globe className="w-5 h-5" /> },
-      { label: "Installation", href: "/blocks/installation", icon: <Download className="w-5 h-5" /> },
-      { label: "Next.js Setup", href: "/blocks/installation/nextjs", icon: <FileCode className="w-5 h-5" /> },
-      { label: "TailwindCSS", href: "/blocks/installation/tailwind", icon: <Layout className="w-5 h-5" /> },
-      { label: "Add Utilities", href: "/blocks/installation/utils", icon: <Zap className="w-5 h-5" /> },
-      { label: "CLI", href: "/blocks/installation/cli", icon: <Terminal className="w-5 h-5" /> },
+      { label: "Introduction", href: "/build", icon: <Globe className="w-5 h-5" /> },
+      { label: "Installation", href: "/build/installation", icon: <Download className="w-5 h-5" /> },
+      { label: "Next.js Setup", href: "/build/installation/nextjs", icon: <FileCode className="w-5 h-5" /> },
+      { label: "TailwindCSS", href: "/build/installation/tailwind", icon: <Layout className="w-5 h-5" /> },
+      { label: "Add Utilities", href: "/build/installation/utils", icon: <Zap className="w-5 h-5" /> },
+      { label: "CLI", href: "/build/installation/cli", icon: <Terminal className="w-5 h-5" /> },
     ],
   },
   {
@@ -84,9 +86,13 @@ const categories: Category[] = [
     items: [
       { label: "Buttons", href: "/blocks/buttons", icon: <Zap className="w-5 h-5" /> },
       { label: "Cards", href: "/blocks/cards", icon: <Hammer className="w-5 h-5" /> },
-      { label: "Navigation", href: "/blocks/navigation", icon: <Globe className="w-5 h-5" /> },
       { label: "Forms", href: "/blocks/forms", icon: <Package className="w-5 h-5" /> },
       { label: "Loaders", href: "/blocks/loaders", icon: <Sparkles className="w-5 h-5" /> },
+      { label: "Menus", href: "/blocks/menus", icon: <Palette className="w-5 h-5" /> },
+      { label: "Modals", href: "/blocks/modals", icon: <Layout className="w-5 h-5" /> },
+      { label: "Navigation", href: "/blocks/navigation", icon: <Globe className="w-5 h-5" /> },
+      { label: "Pagination", href: "/blocks/pagination", icon: <Star className="w-5 h-5" /> },
+      { label: "Typography", href: "/blocks/typography", icon: <FileCode className="w-5 h-5" /> },
     ],
   },
 ];
@@ -107,22 +113,7 @@ export function Sidebar() {
   };
 
   return (
-    <aside className="w-80 xl:w-96 border-r border-white/10 bg-black/95 backdrop-blur-2xl h-screen sticky top-0 flex flex-col overflow-hidden">
-      {/* Logo */}
-      <div className="p-8 border-b border-white/10">
-        <Link href="/blocks" className="flex items-center gap-4 group">
-          <div className="w-14 h-14 bg-gradient-to-br from-gold via-yellow-500 to-amber-600 rounded-2xl flex items-center justify-center text-3xl font-black shadow-2xl shadow-gold/40 group-hover:scale-110 transition">
-            M
-          </div>
-          <div>
-            <h1 className="text-3xl font-black bg-gradient-to-r from-gold to-yellow-400 bg-clip-text text-transparent">
-              MjolnirUI
-            </h1>
-            <p className="text-gold text-sm font-bold">Component Forge ⚡</p>
-          </div>
-        </Link>
-      </div>
-
+    <aside className="w-80 xl:w-96 border-r border-white/10 bg-black/95 backdrop-blur-2xl flex flex-col overflow-hidden -mt-28">
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto p-6 space-y-8">
         {categories.map((category) => {
@@ -154,7 +145,7 @@ export function Sidebar() {
                         <Link
                           href={item.soon ? "#" : item.href}
                           className={cn(
-                            "flex items-center justify-between w-full py-3 px-5 rounded-xl text-sm font-medium transition-all relative",
+                            "flex items-center justify-between w-full py-2 px-6 rounded-xl text-sm font-medium transition-all relative",
                             isActive
                               ? "bg-gradient-to-r from-gold/20 to-yellow-600/20 text-gold border border-gold/40 shadow-lg shadow-gold/20"
                               : "text-gray-400 hover:text-white hover:bg-white/5",
@@ -191,9 +182,50 @@ export function Sidebar() {
         })}
       </nav>
 
+      {/* Sponsorship Banner */}
+      <div className="p-6 border-t border-white/10">
+        <SponsorshipBanner />
+      </div>
+
+      {/* Upgrade Buttons */}
+      <div className="p-6 border-t border-white/10 space-y-4">
+        <Link href="/pricing" className="block">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-black font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 transition-all duration-300"
+          >
+            <Zap className="w-5 h-5" />
+            Upgrade to Pro
+          </motion.button>
+        </Link>
+
+        <Link href="/pricing" className="block">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full py-4 bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 transition-all duration-300"
+          >
+            <Hammer className="w-5 h-5" />
+            Upgrade to Elite
+          </motion.button>
+        </Link>
+
+        <Link href="/pricing" className="block">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-black font-bold rounded-xl shadow-lg flex items-center justify-center gap-3 transition-all duration-300"
+          >
+            <Bitcoin className="w-5 h-5" />
+            Upgrade to Bitcoin
+          </motion.button>
+        </Link>
+      </div>
+
       {/* Footer */}
       <div className="p-6 border-t border-white/10 text-center">
-        <p className="text-xs text-gray-500">Forged in Valhalla • {new Date().getFullYear()}</p>
+        <p className="text-xs text-gray-500">Forged in Valhalla • 2026</p>
       </div>
     </aside>
   );

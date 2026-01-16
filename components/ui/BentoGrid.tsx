@@ -121,12 +121,16 @@ export const BentoGridItem = ({
 
           {id === 2 && (
             <div className="w-full h-full">
-              <Singularity 
-                className="absolute inset-0"  // ← Repositioned for Asgardian perfection
-                speed={0.8}
-                intensity={1.5}
-                size={1.2}
+
+              {/* Static Accretion Disk Fallback Image */}
+              <Image
+                src="/Images/Backgrounds/Singularity.png"
+                alt="Singularity"
+                fill
+                priority
+                className="object-cover object-center scale-80"
               />
+              
               <div className="absolute top-4 left-4">
                   <div className="group-hover/bento:translate-x-4 transition duration-200">
                     <div className="font-bold text-2xl lg:text-3xl text-white z-10">
@@ -208,25 +212,30 @@ export const BentoGridItem = ({
         )}
 
           {id === 5 && (
-            <div className="w-full h-full">
+          <div className="w-full h-full relative">
+            {/* Force the container to have height */}
+            <div className="absolute inset-0">
               <Globe 
-                dark scale={1.2}
+                dark 
+                scale={1.2}
                 offsetX={200}
-                offsetY={300}
+                offsetY={1200}
+                className="w-full h-full"
               />
-              {/* TEXT — BOTTOM-LEFT + HOVER ANIMATION RESTORED */}
-              <div className="absolute top-4 left-4">
-                <div className="group-hover/bento:translate-x-4 transition duration-200">
-                  <div className="font-bold text-2xl lg:text-3xl text-white z-10">
-                    {title}
-                  </div>
-                  <div className="font-extralight text-gold text-lg lg:text-base z-10">
-                    {description}
-                  </div>
+            </div>
+            {/* TEXT — BOTTOM-LEFT + HOVER ANIMATION RESTORED */}
+            <div className="absolute top-4 left-4 z-10 pointer-events-none">
+              <div className="group-hover/bento:translate-x-4 transition duration-200">
+                <div className="font-bold text-2xl lg:text-3xl text-white">
+                  {title}
+                </div>
+                <div className="font-extralight text-gold text-lg lg:text-base">
+                  {description}
                 </div>
               </div>
             </div>
-          )}
+          </div>
+        )}
           
           {id === 6 && (
             <div className="w-full h-full overflow-hidden rounded-3xl">
