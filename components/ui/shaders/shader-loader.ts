@@ -1,30 +1,33 @@
 import { ShaderConfig } from './shader-manager';
 
-// Import all user shaders explicitly
-import accretionShader from './user/accretion';
-import atomicShader from './user/atomic';
+// ── Default-export shaders (atmosphere, aurora, globe, etc.) ──────────────────
 import atmosphereShader from './user/atmosphere';
 import auraWavesShader from './user/aura-waves';
-import bifrostShader from './user/bifrost';
 import blackHoleShader from './user/black-hole';
-import colorHaloShader from './user/colorhalo';
-import darkVeilShader from './user/darkveil';
 import globeShader from './user/globe';
-import gravityLensShader from './user/gravitylens';
 import hyperspeedShader from './user/hyperspeed';
 import laserFlowShader from './user/laser-flow';
-import lightPillarShader from './user/light-pillar';
-import lightningShader from './user/lightning';
-import liquidRibbonsShader from './user/liquidribbons';
-import matrixRainShader from './user/matrix-rain';
-import neuralNetShader from './user/neuralnet';
-import rippleGridShader from './user/ripple-grid';
-import silkyLinesShader from './user/silkylines';
-import singularityShader from './user/singularity';
-import starFieldShader from './user/starfield';
-import swirlingGasShader from './user/swirling-gas';
 
-// Import preset shaders
+// ── Named-export shaders ───────────────────────────────────────────────────────
+import { accretion as accretionShader } from './user/accretion';
+import { atomic as atomicShader } from './user/atomic';
+import { biFrost as bifrostShader } from './user/bifrost';
+import { colorHalo as colorHaloShader } from './user/colorhalo';
+import { darkVeil as darkVeilShader } from './user/darkveil';
+import { gravityLens as gravityLensShader } from './user/gravitylens';
+import { lightPillar as lightPillarShader } from './user/light-pillar';
+import { lightning as lightningShader } from './user/lightning';
+import { lightningEffect as lightningEffectShader } from './user/lightningeffect';
+import { liquidRibbons as liquidRibbonsShader } from './user/liquidribbons';
+import { matrixRain as matrixRainShader } from './user/matrix-rain';
+import { neuralNet as neuralNetShader } from './user/neuralnet';
+import { rippleGrid as rippleGridShader } from './user/ripple-grid';
+import { silkyLines as silkyLinesShader } from './user/silkylines';
+import { singularity as singularityShader } from './user/singularity';
+import { starField as starFieldShader } from './user/starfield';
+import { swirlingGas as swirlingGasShader } from './user/swirling-gas';
+
+// ── Preset shaders (default exports) ─────────────────────────────────────────
 import nebulaShader from './presets/nebula';
 import cyberpunkShader from './presets/cyberpunk';
 
@@ -49,6 +52,7 @@ export class ShaderLoader {
     'laser-flow': laserFlowShader,
     'light-pillar': lightPillarShader,
     lightning: lightningShader,
+    lightningeffect: lightningEffectShader,
     liquidribbons: liquidRibbonsShader,
     'matrix-rain': matrixRainShader,
     neuralnet: neuralNetShader,
@@ -79,20 +83,7 @@ export class ShaderLoader {
     throw new Error(`Shader ${shaderName} not found`);
   }
 
-  private async loadPresetShader(shaderName: string): Promise<ShaderConfig | null> {
-    // Use registry instead of dynamic imports
-    const shader = this.shaderRegistry[shaderName];
-    return shader || null;
-  }
-
-  private async loadUserShader(shaderName: string): Promise<ShaderConfig | null> {
-    // Use registry instead of dynamic imports
-    const shader = this.shaderRegistry[shaderName];
-    return shader || null;
-  }
-
   async discoverShaders(): Promise<string[]> {
-    // Return all shaders from registry
     return Object.keys(this.shaderRegistry);
   }
 
@@ -105,14 +96,14 @@ export class ShaderLoader {
     this.loadedShaders.clear();
   }
 
-  // Utility method to validate shader config
-  validateShaderConfig(config: any): config is ShaderConfig {
+  validateShaderConfig(config: unknown): config is ShaderConfig {
     return (
       typeof config === 'object' &&
-      typeof config.name === 'string' &&
-      typeof config.description === 'string' &&
-      typeof config.vertexShader === 'string' &&
-      typeof config.fragmentShader === 'string'
+      config !== null &&
+      typeof (config as Record<string, unknown>).name === 'string' &&
+      typeof (config as Record<string, unknown>).description === 'string' &&
+      typeof (config as Record<string, unknown>).vertexShader === 'string' &&
+      typeof (config as Record<string, unknown>).fragmentShader === 'string'
     );
   }
 }
