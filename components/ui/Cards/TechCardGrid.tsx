@@ -82,8 +82,11 @@ function randomInterval(): number {
 
 function buildInitialCards(count: number): CardState[] {
   return Array.from({ length: count }, (_, i) => {
-    const gIdx = (i * 3) % BIFROST_GRADIENTS.length;
-    const icon = techStackIcons[i % techStackIcons.length];
+    // Stride-7 spread: walks the icon array in non-sequential steps so
+    // adjacent cards show visually distinct icons on first render.
+    // 7 is coprime with any pool size ≤ ~50, guaranteeing full coverage.
+    const gIdx  = (i * 3) % BIFROST_GRADIENTS.length;
+    const icon  = techStackIcons[(i * 7) % techStackIcons.length];
     return {
       icon,
       gradient: BIFROST_GRADIENTS[gIdx],
@@ -222,7 +225,9 @@ export function TechCardGrid() {
     clearAllTimers();
 
     const scheduleCard = (index: number) => {
-      const stagger = index * 200 + Math.random() * 800;
+      // Reduced stagger: all 30 cards begin flipping within ~2.5s of mount
+      // (was index*200+800 → up to 6.8s for the last card).
+      const stagger = index * 80 + Math.random() * 300;
 
       addTimer(setTimeout(() => {
         triggerFlip(index);

@@ -7,7 +7,6 @@
 // but the spec body text (and SSR safety requirements) place it here.
 // This is the intentional resolution of that contradiction.
 
-import { SiThreedotjs } from "react-icons/si";
 import type { TechIcon } from "@/data/index";
 
 export const techStackIcons: TechIcon[] = [
@@ -24,6 +23,7 @@ export const techStackIcons: TechIcon[] = [
   { name: "Three.js",      svgPath: "/Icons/Technologies/threejs.svg" },
   { name: "Framer Motion", svgPath: "/Icons/Technologies/fm.svg" },
   { name: "Blender",       svgPath: "/Icons/Technologies/blend.svg" },
+  { name: "Bambu Lab",     svgPath: "/Icons/Technologies/bambulab.svg" },
   // ── Backend / Runtime ───────────────────────────────────────────────────
   { name: "Node.js",       svgPath: "/Icons/Technologies/nodejs.svg" },
   { name: "Python",        svgPath: "/Icons/Technologies/python.svg" },
@@ -34,8 +34,8 @@ export const techStackIcons: TechIcon[] = [
   { name: "Docker",        svgPath: "/Icons/Technologies/docker.svg" },
   { name: "Cloudflare",    svgPath: "/Icons/Technologies/cloudflare.svg" },
   // ── Payments / Commerce ─────────────────────────────────────────────────
-  { name: "Coinbase",        svgPath: "/Icons/Payments/coinbase-64.svg" },
   { name: "Stripe",        svgPath: "/Icons/Payments/stripe-64.svg" },
+  { name: "Coinbase",      svgPath: "/Icons/Payments/coinbase-64.svg" },
   { name: "Uphold",        svgPath: "/Icons/Payments/uphold-64.svg" },
   // ── Platform / Hosting ──────────────────────────────────────────────────
   { name: "Vercel",        svgPath: "/vercel.svg" },
@@ -49,6 +49,7 @@ export const techStackIcons: TechIcon[] = [
   // ── SaaS / Tools ────────────────────────────────────────────────────────
   { name: "Figma",         svgPath: "/Icons/Technologies/figma.svg" },
   { name: "HubSpot",       svgPath: "/Icons/Technologies/hubspot.svg" },
+  { name: "Calendly",      svgPath: "/Icons/Technologies/calendly.svg" },
   { name: "ElevenLabs",    svgPath: "/Icons/Technologies/elevenlabs.svg" },
   { name: "Stream",        svgPath: "/Icons/Technologies/stream.svg" },
   { name: "App",           svgPath: "/Icons/Technologies/app.svg" },
