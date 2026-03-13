@@ -20,8 +20,9 @@ type Tier = {
   buttonText: string;
   electricColor: string;
   buttonGradient: string;
-  stripePriceIdMonthly?: string;
-  stripePriceIdAnnual?: string;
+  /** Product slug sent to the server — maps to a server-side price ID. Never send raw Stripe price IDs from the client. */
+  productMonthly?: string;
+  productAnnual?: string;
   popular?: boolean;
   btcAddress?: string;
   btcAmount?: string;
@@ -45,8 +46,8 @@ const tiers: Tier[] = [
     buttonText: "Get Started",
     electricColor: "#7DF9FF",
     buttonGradient: "from-cyan-500 to-emerald-500",
-    stripePriceIdMonthly: "price_1T7K1dFxkFUD7EnZr3zjSJbR",
-    stripePriceIdAnnual: "price_1T7K3UFxkFUD7EnZCyYlsSMW",
+    productMonthly: "base_monthly",
+    productAnnual: "base_annual",
   },
   {
     name: "Pro",
@@ -66,8 +67,8 @@ const tiers: Tier[] = [
     electricColor: "#34D399",
     buttonGradient: "from-emerald-500 to-lime-400",
     popular: true,
-    stripePriceIdMonthly: "price_1T7K7hFxkFUD7EnZWMC8HCxA",
-    stripePriceIdAnnual: "price_1T7K8KFxkFUD7EnZeweUODVB",
+    productMonthly: "pro_monthly",
+    productAnnual: "pro_annual",
   },
   {
     name: "Elite",
@@ -86,8 +87,8 @@ const tiers: Tier[] = [
     buttonText: "Join Elite",
     electricColor: "#F0FF42",
     buttonGradient: "from-yellow-400 to-amber-600",
-    stripePriceIdMonthly: "price_1T8rLOFxkFUD7EnZ6YqWV43v",
-    stripePriceIdAnnual: "price_1T8rLpFxkFUD7EnZbzpBrARl",
+    productMonthly: "elite_monthly",
+    productAnnual: "elite_annual",
   },
   {
     name: "Custom",
@@ -114,15 +115,15 @@ export default function Pricing() {
   const [showBtcModal, setShowBtcModal] = useState(false);
 
   const handleStripeCheckout = async (tier: Tier) => {
-    const priceId = isAnnual ? tier.stripePriceIdAnnual : tier.stripePriceIdMonthly;
-    if (!priceId) return;
+    const product = isAnnual ? tier.productAnnual : tier.productMonthly;
+    if (!product) return;
 
     setLoading(tier.name);
     try {
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ priceId, mode: "subscription" }),
+        body: JSON.stringify({ product }),
       });
 
       const data = await res.json();
@@ -312,13 +313,13 @@ export default function Pricing() {
         {/* Trusted Payments */}
         <div className="mt-20 text-center">
           <p className="text-gray-500 mb-6 text-lg">Trusted Payment Services</p>
-          <div className="flex items-center justify-center lg:gap-8 gap-4 flex-wrap">
-            <Image src="/Icons/Cryptos/bitcoin-64.svg" alt="Bitcoin" width={48} height={48} />
-            <Image src="/icons/payments/cash-app-64.svg" alt="CashApp" width={56} height={56} />
-            <Image src="/icons/payments/coinbase-64.svg" alt="Coinbase" width={56} height={56} />
-            <Image src="/icons/payments/stripe-64.svg" alt="Stripe" width={48} height={48} />
-            <Image src="/icons/payments/uphold-64.svg" alt="Uphold" width={48} height={48} />
-            <Image src="/icons/payments/venmo-64.svg" alt="Venmo" width={48} height={48} />
+          <div className="flex items-center justify-center lg:gap-8 sm:gap-4 gap-3 flex-nowrap">
+            <Image src="/Icons/Cryptos/bitcoin-64.svg" alt="Bitcoin" width={48} height={48} className="w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain" />
+            <Image src="/icons/payments/cash-app-64.svg" alt="CashApp" width={56} height={56} className="w-7 h-7 sm:w-11 sm:h-11 lg:w-14 lg:h-14 object-contain" />
+            <Image src="/icons/payments/coinbase-64.svg" alt="Coinbase" width={56} height={56} className="w-7 h-7 sm:w-11 sm:h-11 lg:w-14 lg:h-14 object-contain" />
+            <Image src="/icons/payments/stripe-64.svg" alt="Stripe" width={48} height={48} className="w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain" />
+            <Image src="/icons/payments/uphold-64.svg" alt="Uphold" width={48} height={48} className="w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain" />
+            <Image src="/icons/payments/venmo-64.svg" alt="Venmo" width={48} height={48} className="w-7 h-7 sm:w-10 sm:h-10 lg:w-12 lg:h-12 object-contain" />
           </div>
         </div>
       </div>

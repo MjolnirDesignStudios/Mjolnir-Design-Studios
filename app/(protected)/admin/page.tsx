@@ -81,10 +81,10 @@ export default function AdminDashboard() {
     company: string;
     role: string;
   }>({
-    name: 'Tony Martello',
-    email: 'contact@mjolnirdesignstudios.com',
+    name: '',
+    email: '',
     company: 'Mjolnir Design Studios',
-    role: 'Founder & Creative Director',
+    role: 'Administrator',
   });
 
   // Check Supabase authentication and admin role
@@ -96,14 +96,25 @@ export default function AdminDashboard() {
         return;
       }
 
-      // Check admin role - only allow specific admin users
-      const adminEmails = ['contact@mjolnirdesignstudios.com', 'admin@mjolnirdesignstudios.com'];
-      if (!adminEmails.includes(user.email || '')) {
+      // Verify is_admin flag from the profiles table (server-side authoritative check)
+      const { data: profile, error: profileError } = await supabaseClient
+        .from('profiles')
+        .select('is_admin')
+        .eq('id', user.id)
+        .single();
+
+      if (profileError || !profile?.is_admin) {
         router.push('/'); // Redirect non-admin users
         return;
       }
 
       setUser(user);
+      // Populate userData from the authenticated session — never from hardcoded defaults
+      setUserData(prev => ({
+        ...prev,
+        name:  user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || 'Admin',
+        email: user.email || '',
+      }));
       setLoading(false);
     };
 

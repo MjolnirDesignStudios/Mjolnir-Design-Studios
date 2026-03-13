@@ -4,7 +4,7 @@ import Navbar from "@/components/ui/Navigation/Navbar";
 import { FloatingNav } from "@/components/ui/Navigation/FloatingNav";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Blocks from "@/components/Blocks";
+import Build from "@/components/Build";
 import Tech from "@/components/Tech";
 import Pricing from "@/components/Pricing";
 import Footer from "@/components/Footer";
@@ -34,9 +34,9 @@ export default function Home() {
         <About />
       </div>
 
-      {/* Block — Always Visible — Now Responsive */}
+      {/* Build — Always Visible — Now Responsive */}
       <div className="w-full">
-        <Blocks />
+        <Build />
       </div>
 
       {/* Workshop Signup — Always Visible — Now Responsive */}

@@ -11,19 +11,15 @@ import { Zap } from "lucide-react";
 export default function LoginPage() {
   const signInWithGitHub = async () => {
     try {
-      console.log("Starting GitHub sign-in...");
-      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+      const { error } = await supabaseClient.auth.signInWithOAuth({
         provider: "github",
         options: {
           redirectTo: `${window.location.origin}/blocks`,
         },
       });
-      console.log("GitHub OAuth response:", { data, error });
       if (error) {
-        console.error("GitHub login error:", error);
+        console.error("GitHub login error:", error.message);
         alert("GitHub login failed: " + error.message);
-      } else {
-        console.log("GitHub OAuth initiated, redirecting...");
       }
     } catch (err) {
       console.error("Unexpected GitHub login error:", err);

@@ -15,7 +15,7 @@ export default function AdminLogin() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const adminEmails = ["contact@mjolnirdesignstudios.com", "cdc84@outlook.com"];
+  const adminEmails = ["contact@mjolnirdesignstudios.com", "admin@mjolnirdesignstudios.com"];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

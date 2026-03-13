@@ -1,7 +1,7 @@
 // app/(public)/intake/page.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 
@@ -17,7 +17,7 @@ interface FormData {
   goals: string;
 }
 
-export default function IntakeForm() {
+function IntakeFormInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const eventId = searchParams.get('event_id');
@@ -243,5 +243,13 @@ export default function IntakeForm() {
         </form>
       </motion.div>
     </div>
+  );
+}
+
+export default function IntakeForm() {
+  return (
+    <Suspense fallback={null}>
+      <IntakeFormInner />
+    </Suspense>
   );
 }

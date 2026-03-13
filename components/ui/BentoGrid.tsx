@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import LightningEffect from "./Animations/LightningEffect";
 import Globe from "./Animations/Globe";
 import ShimmerButton from "./Buttons/ShimmerButton";
-import { IoCopyOutline } from "react-icons/io5";
+import { IoCopy } from "react-icons/io5";
 import Image from "next/image";
 import { BifrostGradient } from "./Animations/BifrostGradients";
 import { ColorfulText } from "@/components/ui/TextEffects/ColorfulText";
@@ -272,7 +272,7 @@ export const BentoGridItem = ({
                     <div className="relative flex z-20 items-center justify-center mt-2 mb-2 pointer-events-auto">
                       <ShimmerButton
                         title={copied ? "Email copied" : "Copy Email"}
-                        icon={<IoCopyOutline />}
+                        icon={<IoCopy />}
                         position="left"
                         otherClasses="mx-auto relative z-10"
                         handleClick={() => {

@@ -150,7 +150,7 @@ export default function Forge() {
       <motion.aside
         animate={{ width: isSidebarOpen ? "18rem" : "6rem" }}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="fixed left-0 top-24 bottom-0 z-40 border-r border-white/10 bg-black/95 backdrop-blur-2xl flex flex-col"
+        className="fixed left-0 top-24 bottom-0 z-40 border-r border-white/10 bg-black/95 backdrop-blur-2xl flex flex-col h-[calc(100vh-6rem)]"
       >
         <div className="h-full flex flex-col relative">
           {/* Header: Centered Hammer */}

@@ -15,7 +15,7 @@ import { Menu, X, Search, User, Github } from "lucide-react";
 
 const navItems = [
   { name: "About", link: "/#about" },
-  { name: "Blocks", link: "/#block" },
+  { name: "Build", link: "/#build" },
   { name: "Forge", link: "/#forge" },
   { name: "Pricing", link: "/#pricing" },
   { name: "Tech", link: "/#tech" },

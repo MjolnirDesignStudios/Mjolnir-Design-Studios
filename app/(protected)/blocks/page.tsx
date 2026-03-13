@@ -8,16 +8,19 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Zap } from "lucide-react";
+// import BackgroundStudio from "@/components/ui/BackgroundStudio";
 
 export default function ProjectsWelcome() {
   return (
     <div className="flex flex-col min-h-screen bg-neutral-950 text-white">
       <UserNavbar />
 
+      {/* <BackgroundStudio className="fixed inset-0 -z-10" showControls={false} /> */}
+
       <div className="flex flex-1 pt-24">
         <UserSidebar />
 
-        <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <main className="flex-1 flex flex-col min-w-0 ml-20 overflow-hidden">
           <div className="flex-1 overflow-y-auto bg-gradient-to-b from-neutral-950 via-purple-950/5 to-neutral-950">
             <div className="p-10 lg:p-20">
               <motion.div
@@ -30,9 +33,9 @@ export default function ProjectsWelcome() {
                   initial={{ opacity: 0, y: 50, scale: 0.8 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ duration: 1, type: "spring", stiffness: 200 }}
-                  className="text-6xl md:text-8xl font-black text-white mb-12 bg-gradient-to-r from-white via-gold to-emerald-400 bg-clip-text text-transparent"
+                  className="text-6xl md:text-8xl font-black text-white mb-12"
                 >
-                  Mjolnir Projects
+                  Mjolnir for <span className="text-gold">StartUps</span>
                 </motion.h1>
 
                 <div className="prose prose-invert max-w-none text-lg text-gray-300 space-y-8 mx-auto">

@@ -1,40 +1,14 @@
 // components/WorkshopSignup.tsx
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { QRCodeCanvas } from "qrcode.react";
 import { Calendar, QrCode, Users, Zap } from "lucide-react";
 import ElectricBorder from "@/components/ui/ElectricBorder";
 
-// Calendly script loading
-const loadCalendlyScript = () => {
-  if (typeof window !== 'undefined' && !window.Calendly) {
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    document.head.appendChild(script);
-  }
-};
-
 export default function WorkshopSignup() {
   const [loading, setLoading] = useState(false);
-  const [showInlineCalendar, setShowInlineCalendar] = useState(false);
-
-  useEffect(() => {
-    loadCalendlyScript();
-  }, []);
-
-  const openCalendlyPopup = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/mjolnirdesignstudios/mjolnir-forge-live'
-      });
-    } else {
-      // Fallback to direct link
-      window.open('https://calendly.com/mjolnirdesignstudios/mjolnir-forge-live', '_blank');
-    }
-  };
 
   const handleStripeCheckout = async () => {
     setLoading(true);
@@ -100,7 +74,7 @@ export default function WorkshopSignup() {
                 <div className="space-y-4 mb-8 flex-grow">
                   <div className="flex items-center gap-3 text-gray-300">
                     <Calendar className="w-5 h-5 text-emerald-400" />
-                    <span>Pay Now and Select a Time</span>
+                    <span>Schedule First, Pay Later</span>
                   </div>
                   <div className="flex items-center gap-3 text-gray-300">
                     <Users className="w-5 h-5 text-emerald-400" />
@@ -109,76 +83,26 @@ export default function WorkshopSignup() {
                 </div>
 
                 <div className="text-center mb-6">
-                  <p className="text-gray-400 text-sm mb-4">Scan QR code or click to pay and schedule</p>
+                  <p className="text-gray-400 text-sm mb-4">Scan QR code to schedule, then pay</p>
                   <div className="bg-white p-4 rounded-2xl inline-block mb-4">
-                      <QRCodeCanvas value="https://calendly.com/mjolnirdesignstudios/mjolnir-forge-live" size={150} level="H" />
+                    <QRCodeCanvas value="https://calendly.com/mjolnirdesignstudios/mjolnir-forge-live" size={150} level="H" />
                   </div>
-                  <motion.button
-                    onClick={openCalendlyPopup}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:scale-105 transition-all duration-200 shadow-lg mb-4"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Calendar className="w-4 h-4" />
-                    Schedule Now
-                  </motion.button>
-                </div>
-
-                {/* Inline Calendar Toggle */}
-                <div className="text-center mb-6">
-                  <motion.button
-                    onClick={() => setShowInlineCalendar(!showInlineCalendar)}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-lime-400 text-black font-semibold rounded-lg hover:scale-105 transition-all duration-200 shadow-md text-sm"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Calendar className="w-4 h-4" />
-                    {showInlineCalendar ? 'Hide' : 'Show'} Full Calendar
-                  </motion.button>
-                </div>
-
-                {/* Inline Calendly Embed */}
-                {showInlineCalendar && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="mb-6"
-                  >
-                    <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-                      <div className="text-center mb-4">
-                        <h3 className="text-lg font-semibold text-white">Book Your Session</h3>
-                        <p className="text-gray-400 text-sm">Select a time that works for you</p>
-                      </div>
-                      {/* Calendly inline widget */}
-                      <div
-                        className="calendly-inline-widget"
-                        data-url="https://calendly.com/mjolnirdesignstudios/mjolnir-forge-live?background_color=282828&text_color=ffffff&primary_color=00be4b"
-                        style={{ minWidth: '320px', height: '700px' }}
-                      ></div>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Pay & Schedule CTA */}
-                <div className="text-center mt-auto">
                   <motion.button
                     onClick={handleStripeCheckout}
                     disabled={loading}
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 to-lime-400 text-black font-bold rounded-2xl hover:scale-105 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-lime-400 text-black font-bold text-lg rounded-xl hover:scale-105 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {loading ? (
                       <>
-                        <Zap className="animate-pulse w-6 h-6" />
+                        <div className="animate-spin w-5 h-5 border-2 border-black border-t-transparent rounded-full"></div>
                         Processing...
                       </>
                     ) : (
                       <>
-                        <QrCode className="w-6 h-6" />
-                        Pay & Schedule
+                        <Zap className="w-5 h-5" />
+                        Book/Pay Now - $500
                       </>
                     )}
                   </motion.button>
@@ -210,7 +134,7 @@ export default function WorkshopSignup() {
                   </div>
                   <div className="flex items-center gap-3 text-gray-300">
                     <Users className="w-5 h-5 text-yellow-400" />
-                    <span>Unlimited participants</span>
+                    <span>Limited Seating (4 seats) - Friday Only</span>
                   </div>
                 </div>
 

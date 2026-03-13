@@ -10,33 +10,33 @@ import { getAssetUrls } from '@/lib/cdn-config';
 
 const footerLinks = {
   Company: [
-    { name: "About Us", href: "/#about" },
+    { name: "About Us", href: "/about" },
     { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
     { name: "Roadmap", href: "/roadmap" },
     { name: "Team", href: "/team" },
   ],
   Designs: [
-    { name: "Animations", href: "/#animations" },
-    { name: "Components", href: "/#components" },
-    { name: "Engineering", href: "/#engineering" },
-    { name: "Icons & Logos", href: "/#icons" },
-    { name: "Video", href: "/#video" },
-    { name: "Web2/3", href: "/#web3" },
+    { name: "Animations", href: "/animations" },
+    { name: "Components", href: "/components" },
+    { name: "Engineering", href: "/engineering" },
+    { name: "Icons & Logos", href: "/icons" },
+    { name: "Video", href: "/video" },
+    { name: "Web2/3", href: "/web3" },
   ],
   Products: [
-    { name: "Agentic AI", href: "/forge" },
+    { name: "3D Modeling", href: "/forge" },
     { name: "Automations", href: "/automations" },
     { name: "Hammer Tech", href: "/hammer-tech" },
     { name: "Mjolnir Forge", href: "/forge" },
-    { name: "MjolnirAI Pro", href: "/pricing" },
-    { name: "MjolnirUI Pro", href: "https://mjolnirui.com" },
+    { name: "MjolnirUI Pro", href: "/pricing" },
+    { name: "OdinAI", href: "/odinai" },
   ],
   Support: [
     { name: "Blog/Vlog", href: "/blog" },
     { name: "Community", href: "https://discord.gg/mjolnir" },
     { name: "Documentation", href: "/docs" },
-    { name: "Email Support", href: "mailto:forge@mjolnirui.com" },
+    { name: "Email Support", href: "mailto:contact@mjolnirdesignstudios.com" },
     { name: "Help Center", href: "/help" },
     { name: "FAQ", href: "/faq" },
   ],
@@ -65,11 +65,11 @@ export default function Footer() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* 5 COLUMNS — PERFECTLY CENTERED */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-12 justify-items-center mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-12 justify-items-center mb-16">
           {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category} className="space-y-6 text-center lg:text-left">
+            <div key={category} className="space-y-3 text-center lg:text-left w-full sm:w-auto">
               <h3 className="text-2xl font-black text-white">{category}</h3>
-              <ul className="space-y-3">
+              <ul className="space-y-1 sm:space-y-3">
                 {links.map((link) => (
                   <li key={link.name}>
                     <Link
@@ -120,7 +120,7 @@ export default function Footer() {
 
 
           {/* Social Links */}
-          <div className="flex gap-6">
+          <div className="flex gap-3 sm:gap-6">
             {socialMedia.map((profile) => (
               <motion.a
                 key={profile.id}
@@ -128,9 +128,9 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.2, rotate: 5 }}
-                className="w-14 h-14 bg-black/60 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center hover:border-gold transition-all duration-300"
+                className="w-10 h-10 sm:w-14 sm:h-14 bg-black/60 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center hover:border-gold transition-all duration-300"
               >
-                <Image src={profile.img} alt="" width={28} height={28} />
+                <Image src={profile.img} alt="" width={28} height={28} className="w-5 h-5 sm:w-7 sm:h-7" />
               </motion.a>
             ))}
           </div>
