@@ -205,14 +205,17 @@ export type TechIcon = {
   initials?: string;
 };
 
-/** Six Bifrost gradient CSS strings, randomly assigned per card flip. */
+/**
+ * Six Bifrost gradient CSS strings, randomly assigned per card flip.
+ * Coinbase-style: dark/black in the center, full electric color at the edges.
+ */
 export const BIFROST_GRADIENTS: string[] = [
-  "linear-gradient(135deg, #7C3AED, #4F46E5)", // Electric Purple
-  "linear-gradient(135deg, #0EA5E9, #2563EB)", // Electric Blue
-  "linear-gradient(135deg, #10B981, #16A34A)", // Electric Green
-  "linear-gradient(135deg, #EAB308, #D4AF37)", // Electric Gold
-  "linear-gradient(135deg, #F97316, #EA580C)", // Electric Orange
-  "linear-gradient(135deg, #EF4444, #DC2626)", // Electric Red
+  "radial-gradient(ellipse at center, #0a0a0a 15%, #3b1a7a 55%, #7C3AED 80%, #4F46E5 100%)", // Electric Purple
+  "radial-gradient(ellipse at center, #0a0a0a 15%, #0a3a5c 55%, #0EA5E9 80%, #2563EB 100%)", // Electric Blue
+  "radial-gradient(ellipse at center, #0a0a0a 15%, #063a28 55%, #10B981 80%, #16A34A 100%)", // Electric Green
+  "radial-gradient(ellipse at center, #0a0a0a 15%, #3d2e00 55%, #EAB308 80%, #D4AF37 100%)", // Electric Gold
+  "radial-gradient(ellipse at center, #0a0a0a 15%, #3d1800 55%, #F97316 80%, #EA580C 100%)", // Electric Orange
+  "radial-gradient(ellipse at center, #0a0a0a 15%, #3d0a0a 55%, #EF4444 80%, #DC2626 100%)", // Electric Red
 ];
 
 /** Inward glow color per gradient (start color at 19% opacity). */

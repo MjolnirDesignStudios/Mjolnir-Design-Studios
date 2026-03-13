@@ -98,8 +98,10 @@ function buildInitialCards(count: number): CardState[] {
 }
 
 export function TechCardGrid() {
-  const [cardCount, setCardCount] = useState(12);
-  const [cards, setCards] = useState<CardState[]>(() => buildInitialCards(12));
+  const [cardCount, setCardCount] = useState(typeof window !== "undefined" && window.innerWidth >= 1024 ? 30 : 12);
+  const [cards, setCards] = useState<CardState[]>(() =>
+    buildInitialCards(typeof window !== "undefined" && window.innerWidth >= 1024 ? 30 : 12)
+  );
   const gridRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
 
@@ -119,7 +121,7 @@ export function TechCardGrid() {
   // ─── Responsive card count ──────────────────────────────────
   useEffect(() => {
     const update = () => {
-      const count = window.innerWidth >= 1024 ? 24 : 12;
+      const count = window.innerWidth >= 1024 ? 30 : 12;
       setCardCount(prev => {
         if (prev !== count) {
           setCards(buildInitialCards(count));
@@ -245,12 +247,19 @@ export function TechCardGrid() {
   return (
     <div
       ref={gridRef}
-      className="grid grid-cols-4 lg:grid-cols-8 gap-1.5 lg:gap-2 overflow-hidden"
+      className="grid grid-cols-4 lg:grid-cols-10 gap-1.5 lg:gap-2 overflow-hidden"
       style={{
-        maskImage:
-          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+        // Left+right fade AND top fade — two mask layers intersected
+        maskImage: [
+          "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+          "linear-gradient(to bottom, transparent 0%, black 14%, black 100%)",
+        ].join(", "),
+        WebkitMaskImage: [
+          "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
+          "linear-gradient(to bottom, transparent 0%, black 14%, black 100%)",
+        ].join(", "),
+        maskComposite: "intersect",
+        WebkitMaskComposite: "destination-in",
       }}
     >
       {cards.map((card, i) => (
