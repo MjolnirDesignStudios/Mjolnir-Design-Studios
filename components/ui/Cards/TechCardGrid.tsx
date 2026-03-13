@@ -252,11 +252,11 @@ export function TechCardGrid() {
         // Left+right fade AND top fade — two mask layers intersected
         maskImage: [
           "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-          "linear-gradient(to bottom, transparent 0%, black 14%, black 100%)",
+          "linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
         ].join(", "),
         WebkitMaskImage: [
           "linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%)",
-          "linear-gradient(to bottom, transparent 0%, black 14%, black 100%)",
+          "linear-gradient(to bottom, transparent 0%, black 14%, black 86%, transparent 100%)",
         ].join(", "),
         maskComposite: "intersect",
         WebkitMaskComposite: "destination-in",
