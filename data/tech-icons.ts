@@ -13,7 +13,6 @@ import {
   SiGithub,
   SiNodedotjs,
   SiPostgresql,
-  SiHubspot,
   SiCloudflare,
 } from "react-icons/si";
 import type { TechIcon } from "@/data/index";
@@ -37,7 +36,8 @@ export const techStackIcons: TechIcon[] = [
   { name: "HTML5",         svgPath: "/Icons/Technologies/html.svg" },
   { name: "CSS3",          svgPath: "/Icons/Technologies/css.svg" },
   { name: "Blender",       svgPath: "/Icons/Technologies/blend.svg" },
-  { name: "HubSpot",       reactIcon: SiHubspot },
+  { name: "HubSpot",       svgPath: "/Icons/Technologies/hubspot.svg" },
+  { name: "Grok",          svgPath: "/Icons/Technologies/grok.svg" },
   { name: "Replit",        svgPath: "/Icons/Technologies/replit.svg" },
   { name: "Node.js",       reactIcon: SiNodedotjs },
   { name: "Cloudflare",    reactIcon: SiCloudflare },
