@@ -1,4 +1,5 @@
 // data/index.ts — FINAL & SAFE
+import type { ComponentType } from "react";
 export const navItems = [
   { name: "About", link: "/#about" },
   { name: "Build", link: "/#build" },
@@ -193,12 +194,7 @@ export const teamMembers = [
 
 // ────────────────────────────────────────────────────────────────
 // TECH FLIP GRID — types + gradient constants
-// No React or client-only imports in this file.
-// Using `import type { ComponentType }` rather than `import React` + `React.ComponentType`
-// because a bare namespace import of React here would be flagged as unused by the linter.
-// `ComponentType<...>` is identical to `React.ComponentType<...>` at the type level.
 // ────────────────────────────────────────────────────────────────
-import type { ComponentType } from "react";
 
 export type TechIcon = {
   name: string;
